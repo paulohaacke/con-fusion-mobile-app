@@ -37,7 +37,7 @@ angular.module('ConFusion', ['ionic', 'ConFusion.controllers', 'ConFusion.servic
     views: {
       'mainContent': {
         templateUrl: 'templates/home.html',
-	controller: 'IndexController'
+        controller: 'IndexController'
       }
     }
   })
@@ -68,16 +68,16 @@ angular.module('ConFusion', ['ionic', 'ConFusion.controllers', 'ConFusion.servic
       }
     }
   })
-  
+
   .state('app.dishdetails', {
-    url: '/dishdetails',
-    views: {
-      'mainContent': {
-        templateUrl: 'templates/dishdetail.html',
-        controller: ''
+      url: '/dishdetails',
+      views: {
+        'mainContent': {
+          templateUrl: 'templates/dishdetail.html',
+          controller: ''
+        }
       }
-    }
-  })
-  // if none of the above states are matched, use this as the fallback
+    })
+    // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');
 });
