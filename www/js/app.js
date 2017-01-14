@@ -43,22 +43,23 @@ angular.module('ConFusion', ['ionic', 'ConFusion.controllers', 'ConFusion.servic
     })
 
     .state('app.aboutus', {
-            url: '/aboutus',
-            views: {
-                'mainContent': {
-                    templateUrl: 'templates/aboutus.html',
-                    controller: 'AboutController'
-                }
+        url: '/aboutus',
+        views: {
+            'mainContent': {
+                templateUrl: 'templates/aboutus.html',
+                controller: 'AboutController'
             }
-        })
-        .state('app.contactus', {
-            url: '/contactus',
-            views: {
-                'mainContent': {
-                    templateUrl: 'templates/contactus.html',
-                }
+        }
+    })
+
+    .state('app.contactus', {
+        url: '/contactus',
+        views: {
+            'mainContent': {
+                templateUrl: 'templates/contactus.html',
             }
-        })
+        }
+    })
 
     .state('app.menu', {
         url: '/menu',
