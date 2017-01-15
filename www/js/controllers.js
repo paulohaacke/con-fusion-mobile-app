@@ -168,7 +168,7 @@ angular.module('ConFusion.controllers', [])
     };
 }])
 
-.controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', 'baseURL', '$ionicPopover', function($scope, $stateParams, menuFactory, baseURL, $ionicPopover) {
+.controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', 'baseURL', '$ionicPopover', 'favoriteFactory', function($scope, $stateParams, menuFactory, baseURL, $ionicPopover, favoriteFactory) {
 
     $scope.baseURL = baseURL;
     $scope.dish = {};
@@ -201,6 +201,11 @@ angular.module('ConFusion.controllers', [])
     $scope.closeMorePopover = function() {
         $scope.morePopover.hide();
     };
+
+    $scope.addToFavorites = function() {
+        favoriteFactory.addToFavorites(parseInt($stateParams.id, 10));
+        $scope.closeMorePopover();
+    }
 }])
 
 .controller('DishCommentController', ['$scope', 'menuFactory', function($scope, menuFactory) {
@@ -293,7 +298,6 @@ angular.module('ConFusion.controllers', [])
                 $ionicLoading.hide();
             }, 1000);
         });
-    console.log($scope.dishes, $scope.favorites);
 
     $scope.toggleDelete = function() {
         $scope.shouldShowDelete = !$scope.shouldShowDelete;
