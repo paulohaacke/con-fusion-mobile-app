@@ -57,7 +57,18 @@ angular.module('ConFusion', ['ionic', 'ConFusion.controllers', 'ConFusion.servic
         views: {
             'mainContent': {
                 templateUrl: 'templates/home.html',
-                controller: 'IndexController'
+                controller: 'IndexController',
+                resolve: {
+                    dish: ['menuFactory', function(menuFactory) {
+                        return menuFactory.get({ id: 0 });
+                    }],
+                    promotion: ['promotionFactory', function(promotionFactory) {
+                        return promotionFactory.get({ id: 0 });
+                    }],
+                    leader: ['corporateFactory', function(corporateFactory) {
+                        return corporateFactory.get({ id: 3 });
+                    }]
+                }
             }
         }
     })
@@ -67,7 +78,12 @@ angular.module('ConFusion', ['ionic', 'ConFusion.controllers', 'ConFusion.servic
         views: {
             'mainContent': {
                 templateUrl: 'templates/aboutus.html',
-                controller: 'AboutController'
+                controller: 'AboutController',
+                resolve: {
+                    leaders: ['corporateFactory', function(corporateFactory) {
+                        return corporateFactory.query();
+                    }]
+                }
             }
         }
     })
@@ -104,7 +120,12 @@ angular.module('ConFusion', ['ionic', 'ConFusion.controllers', 'ConFusion.servic
         views: {
             'mainContent': {
                 templateUrl: 'templates/menu.html',
-                controller: 'MenuController'
+                controller: 'MenuController',
+                resolve: {
+                    dishes: ['menuFactory', function(menuFactory) {
+                        return menuFactory.query();
+                    }]
+                }
             }
         }
     })
