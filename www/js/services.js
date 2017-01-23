@@ -34,15 +34,16 @@ angular.module('ConFusion.services', ['ngResource'])
                 return;
         }
         favorites.push({ id: index });
+        $localStorage.storeObject('favorites', favorites);
     };
 
     favFac.deleteFromFavorites = function(index) {
         for (var i = 0; i < favorites.length; i++) {
             if (favorites[i].id == index) {
                 favorites.splice(i, 1);
+                $localStorage.storeObject('favorites', favorites);
             }
         }
-        $localStorage.storeObject('favorites', favorites);
     }
 
     favFac.getFavorites = function() {
