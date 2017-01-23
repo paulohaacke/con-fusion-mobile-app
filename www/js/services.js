@@ -2,7 +2,7 @@
 
 angular.module('ConFusion.services', ['ngResource'])
 
-.constant("baseURL", "http://172.17.0.2:3000/")
+.constant("baseURL", "http://192.168.0.14:3000/")
 
 .service('menuFactory', ['$resource', 'baseURL', function($resource, baseURL) {
     return $resource(baseURL + "dishes/:id", null, {
