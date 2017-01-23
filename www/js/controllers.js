@@ -78,8 +78,6 @@ angular.module('ConFusion.controllers', [])
     $scope.tab = 1;
     $scope.filtText = '';
     $scope.showDetails = false;
-    $scope.showMenu = false;
-    $scope.message = "Loading ...";
 
     $scope.dishes = dishes;
 
