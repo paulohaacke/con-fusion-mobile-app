@@ -1,7 +1,6 @@
 angular.module('ConFusion.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $localStorage) {
-
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -72,8 +71,7 @@ angular.module('ConFusion.controllers', [])
     };
 })
 
-.controller('MenuController', ['$scope', 'dishes', 'favoriteFactory', 'baseURL', '$ionicListDelegate', function($scope, dishes, favoriteFactory, baseURL, $ionicListDelegate) {
-
+.controller('MenuController', ['$scope', 'dishes', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPlatform', '$cordovaLocalNotification', '$cordovaToast', function($scope, dishes, favoriteFactory, baseURL, $ionicListDelegate, $ionicPlatform, $cordovaLocalNotification, $cordovaToast) {
     $scope.baseURL = baseURL;
     $scope.tab = 1;
     $scope.filtText = '';
@@ -107,11 +105,29 @@ angular.module('ConFusion.controllers', [])
         console.log("index is " + index);
         favoriteFactory.addToFavorites(index);
         $ionicListDelegate.closeOptionButtons();
+
+        $ionicPlatform.ready(function() {
+            $cordovaLocalNotification.schedule({
+                id: 1,
+                title: "Added Favorite",
+                text: $scope.dishes[index].name
+            }).then(function() {
+                console.log('Added Favorite ' + $scope.dishes[index].name);
+            }, function() {
+                console.log('Failed to add Notification ');
+            })
+
+            $cordovaToast.show('Added Favorite ' + $scope.dishes[index].name, 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function(error) {
+                    // error
+                });
+        })
     }
 }])
 
 .controller('ContactController', ['$scope', function($scope) {
-
     $scope.feedback = {
         mychannel: "",
         firstName: "",
@@ -130,11 +146,9 @@ angular.module('ConFusion.controllers', [])
 
     $scope.channels = channels;
     $scope.invalidChannelSelection = false;
-
 }])
 
 .controller('FeedbackController', ['$scope', 'feedbackFactory', function($scope, feedbackFactory) {
-
     $scope.sendFeedback = function() {
 
         console.log($scope.feedback);
@@ -160,7 +174,6 @@ angular.module('ConFusion.controllers', [])
 }])
 
 .controller('DishDetailController', ['$scope', '$stateParams', 'dish', 'menuFactory', 'baseURL', '$ionicPopover', 'favoriteFactory', '$ionicModal', function($scope, $stateParams, dish, menuFactory, baseURL, $ionicPopover, favoriteFactory, $ionicModal) {
-
     $scope.baseURL = baseURL;
     $scope.dish = {};
     $scope.showDish = false;
@@ -210,7 +223,6 @@ angular.module('ConFusion.controllers', [])
     };
 
     $scope.submitComment = function() {
-
         $scope.mycomment.date = new Date().toISOString();
         console.log($scope.mycomment);
 
@@ -230,8 +242,6 @@ angular.module('ConFusion.controllers', [])
     }
 }])
 
-// implement the IndexController and About Controller here
-
 .controller('IndexController', ['$scope', 'dish', 'promotion', 'leader', 'baseURL', function($scope, dish, promotion, leader, baseURL) {
     $scope.baseURL = baseURL;
     $scope.leader = leader;
@@ -246,7 +256,6 @@ angular.module('ConFusion.controllers', [])
 }])
 
 .controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', function($scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout) {
-
     $scope.baseURL = baseURL;
     $scope.shouldShowDelete = false;
 
@@ -260,7 +269,6 @@ angular.module('ConFusion.controllers', [])
     }
 
     $scope.deleteFavorite = function(index) {
-
         var confirmPopup = $ionicPopup.confirm({
             title: 'Confirm Delete',
             template: 'Are you sure you want to delete this item?'
@@ -276,7 +284,6 @@ angular.module('ConFusion.controllers', [])
         });
 
         $scope.shouldShowDelete = false;
-
     }
 }])
 
@@ -290,7 +297,6 @@ angular.module('ConFusion.controllers', [])
             }
         }
         return out;
-
     }
 });
 
