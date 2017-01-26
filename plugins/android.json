@@ -30,10 +30,16 @@
         },
         "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.ionicframework.confusionmobileapp215453"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.confusionmobileapp215453"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-app-event": {
+            "PACKAGE_NAME": "com.ionicframework.confusionmobileapp215453"
+        },
+        "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.ionicframework.confusionmobileapp215453"
         }
     }
