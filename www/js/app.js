@@ -10,7 +10,7 @@ angular.module('ConFusion', ['ionic', 'ngCordova', 'ConFusion.controllers', 'Con
     $ionicPlatform.ready(function() {
         $timeout(function() {
             $cordovaSplashscreen.hide();
-        }, 20000);
+        }, 2000);
 
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)

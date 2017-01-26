@@ -33,6 +33,9 @@
         },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ionicframework.confusionmobileapp215453"
+        },
+        "cordova-plugin-image-picker": {
+            "PACKAGE_NAME": "com.ionicframework.confusionmobileapp215453"
         }
     },
     "dependent_plugins": {
