@@ -36,6 +36,9 @@
         },
         "cordova-plugin-image-picker": {
             "PACKAGE_NAME": "com.ionicframework.confusionmobileapp215453"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.ionicframework.confusionmobileapp215453"
         }
     },
     "dependent_plugins": {
