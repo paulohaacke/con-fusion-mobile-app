@@ -1,6 +1,6 @@
 angular.module('ConFusion.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $localStorage, $ionicPlatform, $cordovaCamera, $cordovaImagePicker) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $localStorage, $ionicPlatform, $cordovaCamera, $cordovaImagePicker, AuthFactory) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -30,14 +30,12 @@ angular.module('ConFusion.controllers', [])
 
     // Perform the login action when the user submits the login form
     $scope.doLogin = function() {
-        console.log('Doing login', $scope.loginData);
-        $localStorage.storeObject('userinfo', $scope.loginData);
+        if ($scope.rememberMe)
+            $localStorage.storeObject('userinfo', $scope.loginData);
 
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
-        $timeout(function() {
-            $scope.closeLogin();
-        }, 1000);
+        AuthFactory.login($scope.loginData);
+
+        $scope.closeLogin();
     };
 
     $scope.reservation = {};
@@ -338,51 +336,24 @@ angular.module('ConFusion.controllers', [])
     $scope.leaders = leaders;
 }])
 
-.controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', '$ionicPlatform', '$cordovaVibration', function($scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout, $ionicPlatform, $cordovaVibration) {
-    $scope.baseURL = baseURL;
-    $scope.shouldShowDelete = false;
+.controller('FavoriteController', ['dishes', '$scope', '$state', 'favoriteFactory', function(dishes, $scope, $state, favoriteFactory) {
 
-    $scope.favorites = favorites;
+    $scope.tab = 1;
+    $scope.showDelete = false;
+    $scope.message = "Loading ...";
 
-    $scope.dishes = dishes;
+    $scope.dishes = dishes.dishes;
 
     $scope.toggleDelete = function() {
-        $scope.shouldShowDelete = !$scope.shouldShowDelete;
-        console.log($scope.shouldShowDelete);
-    }
+        $scope.showDelete = !$scope.showDelete;
+    };
 
-    $scope.deleteFavorite = function(index) {
-        var confirmPopup = $ionicPopup.confirm({
-            title: 'Confirm Delete',
-            template: 'Are you sure you want to delete this item?'
-        });
-        confirmPopup.then(function(res) {
-            if (res) {
-                console.log('Ok to delete');
-                favoriteFactory.deleteFromFavorites(index);
-                $ionicPlatform.ready(function() {
-                    $cordovaVibration.vibrate(100);
-                });
-            } else {
-                console.log('Canceled delete');
-            }
-        });
-
-        $scope.shouldShowDelete = false;
-    }
+    $scope.deleteFavorite = function(dishid) {
+        console.log('Delete favorites', dishid);
+        favoriteFactory.delete({ id: dishid });
+        $scope.showDelete = !$scope.showDelete;
+        $state.go($state.current, {}, { reload: true });
+    };
 }])
-
-.filter('favoriteFilter', function() {
-    return function(dishes, favorites) {
-        var out = [];
-        for (var i = 0; i < favorites.length; i++) {
-            for (var j = 0; j < dishes.length; j++) {
-                if (dishes[j].id === favorites[i].id)
-                    out.push(dishes[j]);
-            }
-        }
-        return out;
-    }
-});
 
 ;

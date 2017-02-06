@@ -106,13 +106,10 @@ angular.module('ConFusion', ['ionic', 'ngCordova', 'ConFusion.controllers', 'Con
         views: {
             'mainContent': {
                 templateUrl: 'templates/favorites.html',
-                controller: 'FavoritesController',
+                controller: 'FavoriteController',
                 resolve: {
-                    dishes: ['menuFactory', function(menuFactory) {
-                        return menuFactory.query();
-                    }],
-                    favorites: ['favoriteFactory', function(favoriteFactory) {
-                        return favoriteFactory.getFavorites();
+                    dishes: ['favoriteFactory', function(menuFactory) {
+                        return favoriteFactory.query();
                     }]
                 }
             }
