@@ -336,7 +336,6 @@ angular.module('ConFusion.controllers', [])
 .controller('AboutController', ['$scope', 'leaders', 'baseURL', function($scope, leaders, baseURL) {
     $scope.baseURL = baseURL;
     $scope.leaders = leaders;
-    console.log($scope.leaders);
 }])
 
 .controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', '$ionicPlatform', '$cordovaVibration', function($scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout, $ionicPlatform, $cordovaVibration) {

@@ -64,13 +64,13 @@ angular.module('ConFusion', ['ionic', 'ngCordova', 'ConFusion.controllers', 'Con
                 controller: 'IndexController',
                 resolve: {
                     dish: ['menuFactory', function(menuFactory) {
-                        return menuFactory.get({ id: 0 });
+                        return menuFactory.queryFirst({ featured: true });
                     }],
                     promotion: ['promotionFactory', function(promotionFactory) {
-                        return promotionFactory.get({ id: 0 });
+                        return promotionFactory.queryFirst({ featured: true });
                     }],
                     leader: ['corporateFactory', function(corporateFactory) {
-                        return corporateFactory.get({ id: 3 });
+                        return corporateFactory.queryFirst({ featured: true });
                     }]
                 }
             }

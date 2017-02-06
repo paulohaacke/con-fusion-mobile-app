@@ -2,22 +2,48 @@
 
 angular.module('ConFusion.services', ['ngResource'])
 
-.constant("baseURL", "http://192.168.0.14:3000/")
+.constant("baseURL", "https://192.168.0.14:3443/")
 
-.service('menuFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+.factory('menuFactory', ['$resource', 'baseURL', function($resource, baseURL) {
     return $resource(baseURL + "dishes/:id", null, {
         'update': {
             method: 'PUT'
+        },
+        'queryFirst': {
+            isArray: false,
+            method: 'GET',
+            params: {},
+            transformResponse: function(data) {
+                return angular.fromJson(data)[0];
+            }
         }
     });
 }])
 
 .factory('promotionFactory', ['$resource', 'baseURL', function($resource, baseURL) {
-    return $resource(baseURL + "promotions/:id");;
+    return $resource(baseURL + "promotions/:id", null, {
+        'queryFirst': {
+            isArray: false,
+            method: 'GET',
+            params: {},
+            transformResponse: function(data) {
+                return angular.fromJson(data)[0];
+            }
+        }
+    });
 }])
 
 .factory('corporateFactory', ['$resource', 'baseURL', function($resource, baseURL) {
-    return $resource(baseURL + "leadership/:id");
+    return $resource(baseURL + "leadership/:id", null, {
+        'queryFirst': {
+            isArray: false,
+            method: 'GET',
+            params: {},
+            transformResponse: function(data) {
+                return angular.fromJson(data)[0];
+            }
+        }
+    });
 }])
 
 .factory('feedbackFactory', ['$resource', 'baseURL', function($resource, baseURL) {
