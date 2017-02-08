@@ -164,7 +164,7 @@ angular.module('ConFusion.controllers', [])
 
     $scope.addFavorite = function(index) {
         console.log("index is " + index);
-        favoriteFactory.addToFavorites(index);
+        favoriteFactory.save({ _id: index });
         $ionicListDelegate.closeOptionButtons();
 
         $ionicPlatform.ready(function() {
@@ -342,17 +342,37 @@ angular.module('ConFusion.controllers', [])
     $scope.showDelete = false;
     $scope.message = "Loading ...";
 
-    $scope.dishes = dishes.dishes;
+    favoriteFactory.queryDishes(
+        function(response) {
+            $scope.dishes = response;
+        },
+        function(response) {
+            $scope.message = "Error: " + response.status + " " + response.statusText;
+        });
 
     $scope.toggleDelete = function() {
         $scope.showDelete = !$scope.showDelete;
     };
 
     $scope.deleteFavorite = function(dishid) {
-        console.log('Delete favorites', dishid);
-        favoriteFactory.delete({ id: dishid });
-        $scope.showDelete = !$scope.showDelete;
-        $state.go($state.current, {}, { reload: true });
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Confirm Delete',
+            template: 'Are you sure you want to delete this item?'
+        });
+        confirmPopup.then(function(res) {
+            if (res) {
+                console.log('Ok to delete');
+                favoriteFactory.delete({ id: dishid });
+                $state.go($state.current, {}, { reload: true });
+                $ionicPlatform.ready(function() {
+                    $cordovaVibration.vibrate(100);
+                });
+            } else {
+                console.log('Canceled delete');
+            }
+        });
+
+        $scope.showDelete = false;
     };
 }])
 
